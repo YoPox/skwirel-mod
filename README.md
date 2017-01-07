@@ -38,13 +38,14 @@ YoPox    | ?
 
 #### Magic Potion
 
-    Bonus de dommage pour la salle en cours qui décroît avec le temps.
+    Bonus de dommage pour la salle en cours qui décroît avec le temps
     Se recharge en 4 salles
 
 #### Quiplash
 
-    1/2 "FUNNY" : spawne le pickup "acorn".
-    1/2 "NOT FUNNY" : spawne une trollbomb.
+    1/2 "FUNNY" : spawne le pickup "acorn"
+    1/2 "NOT FUNNY" : spawne une trollbomb
+    Se recharge en 6 salles
 
 ### Passive
 
@@ -60,7 +61,7 @@ YoPox    | ?
     Cheval volant
     + TEARS
     + TEARS SPEED
-    Les tears alternativement jaunes puis rouges
+    Les tears alternativement jaunes et rouges
 
 #### RIPTO
 
@@ -103,7 +104,7 @@ YoPox    | ?
     Acid tears
     Les tears sont verts
 
-#### POURRROUJ
+#### POUSSROUJ
 
     - 1 HP
     Fire tears
@@ -153,4 +154,5 @@ YoPox    | ?
 
 #### E-PENSER
 
-    Apparait avec une chance de 1/2 à chaque salle. Lance des tears avec l'effet 20/20 (double tears)
+    Apparait avec une chance de 1/2 à chaque salle
+    Lance des tears avec l'effet 20/20 (double tears)

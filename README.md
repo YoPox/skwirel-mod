@@ -4,22 +4,22 @@ Binding of Isaac : Afterbirth+ mod
 
 ## Pickups
 
-### Acorn (gland)
+#### Acorn (gland)
 
     Augmente légèrement toutes les stats.
 
 ## Trinkets
 
-### Galaxy Note 7
+#### Galaxy Note 7
 
     Remplace les batteries par des bombes
 
-### GTX Titan
+#### GTX Titan
 
     + SPD
     + TEARS
 
-### YouTube Password
+#### YouTube Password
 
     Au début de chaque étage un pickup spawne en fonction de l'écureuil correspondant choisi aléatoirement.
 

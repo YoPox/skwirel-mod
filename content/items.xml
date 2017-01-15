@@ -1,3 +1,7 @@
 <items gfxroot="gfx/items/" version="1">
-	<passive cache="damage" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Riptogamer" />
+	<passive cache="damage" description="..." gfx="item_bydl0.png" name="Mini Bydl0" />
+	<passive cache="damage tearflag" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Mini Riptogamer" />
+	<passive cache="flying damage" description="De cheval!" gfx="item_skama.png" name="Mini Skama" />
+	<passive cache="speed shotspeed" description=":%a$e up!" gfx="item_soucisse.png" name="Mini Soucisse" />
+	<passive cache="damage" description="Geek up!" gfx="item_yopox.png" name="Mini YoPox" />
 </items>

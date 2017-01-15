@@ -47,29 +47,38 @@ YoPox    | ?
     1/2 "NOT FUNNY" : spawne une trollbomb
     Se recharge en 6 salles
 
+#### Arthurr's box
+
+    Donne un nombre de pièces entre 1 et 99 suivant la loi x -> exp(14.397021935*(1-x) - 11.73)
+    Se recharge en 6 salles
+
 ### Passive
+
+#### BYDL0
+
+
 
 #### SOU6
 
-    + SPEED
-    + TEARS
-    + TEARS SPEED
+    + 0.3 SPEED
+    + 0.5 TEARS
+    + 0.25 TEARS SPEED
     Le personnage est vert
 
 #### SKAMA
 
     Cheval volant
-    + TEARS
-    + TEARS SPEED
+    + 0.5 TEARS
+    + 0.15 TEARS SPEED
     Les tears alternativement jaunes et rouges
 
 #### RIPTO
 
-    Piercing tears (cornes)
-    + DMG
-    + TEARS
-    Les tears sont grises
-    Le personnage est orange
+    Piercing tears [ok]
+    + 0.5 DMG [ok]
+    + 0.5 TEARS
+    Les tears sont des cornes grises
+    Le personnage est orange [ok]
 
 #### YOPOX
 

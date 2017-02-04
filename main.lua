@@ -14,7 +14,7 @@ local effects = {
   RIPTO_DMG = 0.5,
   RIPTO_TEARS = 0.5,
   SKAMA_TEARS = 0.5,
-  SKAMA_SSPEED = 1,
+  SKAMA_SSPEED = 0.15,
   SOUCI_SPEED = 0.3,
   SOUCI_TEARS = 0.5,
   SOUCI_SSPEED = 0.25
@@ -68,6 +68,9 @@ function Skwirel:onCache(player, cacheFlag)
   if cacheFlag == CacheFlag.CACHE_SHOTSPEED then
     if player:HasCollectible(itemID.SOUCI) then
       player.ShotSpeed = player.ShotSpeed + effects.SOUCI_SSPEED
+    end
+    if player:HasCollectible(itemID.SKAMA) then
+      player.ShotSpeed = player.ShotSpeed + effects.SKAMA_SSPEED
     end
   end
 

@@ -60,10 +60,10 @@ YoPox    | ?
 
 #### SOU6
 
-    + 0.3 SPEED
+    + 0.3 SPEED [ok]
     + 0.5 TEARS
-    + 0.25 TEARS SPEED
-    Le personnage est vert
+    + 0.25 TEARS SPEED [ok]
+    Le personnage est vert [ok]
 
 #### SKAMA
 

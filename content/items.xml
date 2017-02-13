@@ -1,7 +1,11 @@
 <items gfxroot="gfx/items/" version="1">
-	<passive cache="damage" description="..." gfx="item_bydl0.png" name="Mini Bydl0" />
-	<passive cache="damage tearflag" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Mini Riptogamer" />
-	<passive cache="flying damage" description="De cheval!" gfx="item_skama.png" name="Mini Skama" />
-	<passive cache="speed shotspeed" description=":%a$e up!" gfx="item_arthurrr.png" name="Mini Soucisse" />
-	<passive cache="damage" description="Geek up!" gfx="item_yopox.png" name="Mini YoPox" />
+	<passive cache="damage" description="..." gfx="item_bydl0.png" name="Mini Bydl0"/>
+	<passive cache="damage tearflag" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Mini Riptogamer"/>
+	<passive cache="flying damage" description="De cheval!" gfx="item_skama.png" name="Mini Skama"/>
+	<passive cache="speed shotspeed damage" description=":%a$e up!" gfx="item_soucisse.png" name="Mini Soucisse"/>
+	<passive cache="damage" description="Geek up!" gfx="item_yopox.png" name="Mini YoPox"/>
+	<passive cache="damage" description="Tout de suite, le jeu!" gfx="item_arthurr.png" name="Arthurr"/>
+	<passive cache="shotspeed" description="Lache poce bleu!" gfx="item_poceBleu.png" name="Poce Bleu"/>
+	<passive cache="damage" description="C NUL!" gfx="item_pouceRouge.png" name="Pouce Rouge"/>
+	<active description="Be funny!" gfx="item_quiplash.png" name="Quiplash" maxcharges="6"/>
 </items>

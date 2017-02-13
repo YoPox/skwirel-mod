@@ -43,9 +43,9 @@ YoPox    | ?
 
 #### Quiplash
 
-    1/2 "FUNNY" : spawne le pickup "acorn"
-    1/2 "NOT FUNNY" : spawne une trollbomb
-    Se recharge en 6 salles
+    1/2 "FUNNY" : spawne 4 pickups [ok]
+    1/2 "NOT FUNNY" : ne spawne rien [ok]
+    Se recharge en 6 salles [ok]
 
 #### Arthurr's box
 
@@ -56,7 +56,7 @@ YoPox    | ?
 
 #### BYDL0
 
-
+    EFFET ???
 
 #### SOU6
 
@@ -82,12 +82,14 @@ YoPox    | ?
 
 #### YOPOX
 
-    Tire des lasers à droite / gauche en permanence (à 1/4 des dommages réels)
+    Technology tears
+
 
 #### ARTHURR
 
     + % DEVIL DEAL
     + DMG
+    Le personnage a la tête d'Arthur
 
 #### BOULMAJIK
 
@@ -117,14 +119,15 @@ YoPox    | ?
 
     - 1 HP
     Fire tears
-    + 3 blue hearts
-    + TEARS
-    + DMG
+    + 1 coeur noir
+    + 0.2 TEARS
+    + 0.2 DMG
     Les tears sont rouges
 
 #### POCE BLEU
 
-    ???
+    + 3 coeurs bleus
+    + 0.4 TEARS
 
 #### COUSCOUSSIÈRE
 

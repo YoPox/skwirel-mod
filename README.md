@@ -56,7 +56,8 @@ YoPox    | ?
 
 #### BYDL0 (treasure)
 
-    EFFET ???
+    + 1 TEARS
+    Charm tears
 
 #### SOU6 (treasure) [ok]
 

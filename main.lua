@@ -35,6 +35,8 @@ local effects = {
 
   YOPOX_LUCK = 1.5,
 
+  BYDLO_SPEED = 0.2,
+
   POCEB_TEARS = 0.4,
 
   PCRGE_DMG = 0.2,
@@ -57,6 +59,7 @@ local quiplash_possible_spawn = {
 TearFlags = {
   FLAG_PIERCING = 1<<1,
   FLAG_POISONING = 1<<4,
+  FLAG_CHARMING = 1<<13,
   FLAG_FIRE = 1<<22
 }
 
@@ -118,6 +121,9 @@ function Skwirel:onCache(player, cacheFlag)
       player:SetColor(Color(0.03, 0.83, 0.03, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
       player.MoveSpeed = player.MoveSpeed + effects.SOUCI_SPEED
     end
+    if player:HasCollectible(itemID.BYDLO) then
+      player.MoveSpeed = player.MoveSpeed + effects.BYDLO_SPEED
+    end
   end
 
   if cacheFlag == CacheFlag.CACHE_SHOTSPEED then
@@ -145,6 +151,9 @@ function Skwirel:onCache(player, cacheFlag)
     if player:HasCollectible(itemID.RIPTO) then
       player:SetColor(Color(0.85, 0.34, 0.0, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
       player.TearFlags = player.TearFlags | TearFlags.FLAG_PIERCING
+    end
+    if player:HasCollectible(itemID.BYDLO) then
+      player.TearFlags = player.TearFlags | TearFlags.FLAG_CHARMING
     end
     if player:HasCollectible(itemID.PCRGE) then
       player.TearFlags = player.TearFlags | TearFlags.FLAG_FIRE

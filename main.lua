@@ -10,17 +10,35 @@ local itemID = {
   QPLSH = Isaac.GetItemIdByName("Quiplash"),
   ARTHR = Isaac.GetItemIdByName("Arthurr"),
   POCEB = Isaac.GetItemIdByName("Poce Bleu"),
-  PCRGE = Isaac.GetItemIdByName("Pouce Rouge")
+  PCRGE = Isaac.GetItemIdByName("Pouce Rouge"),
+  -- non mod items
+  TECHNOLOGY = Isaac.GetItemIdByName("Technology")
+}
+
+local possessItem = {
+  RIPTO = false,
+  SOUCI = false,
+  YOPOX = false,
+  PCRGE = false
 }
 
 local effects = {
   RIPTO_DMG = 0.5,
-  RIPTO_TEARS = 0.5,
-  SKAMA_TEARS = 0.5,
+  RIPTO_TEARS = 1,
+
+  SKAMA_DMG = 1,
   SKAMA_SSPEED = 0.15,
+
   SOUCI_SPEED = 0.3,
-  SOUCI_TEARS = 0.5,
-  SOUCI_SSPEED = 0.25
+  SOUCI_SSPEED = 0.25,
+  SOUCI_TEARS = 1,
+
+  YOPOX_LUCK = 1.5,
+
+  POCEB_TEARS = 0.4,
+
+  PCRGE_DMG = 0.2,
+  PCRGE_TEARS = 0.2
 }
 
 local quiplash_possible_nb = 9
@@ -36,25 +54,22 @@ local quiplash_possible_spawn = {
   PickupVariant.PICKUP_TRINKET
 }
 
-local function bit(p)
-  return 2 ^ (p - 1)  -- 1-based indexing
-end
+TearFlags = {
+  FLAG_PIERCING = 1<<1,
+  FLAG_POISONING = 1<<4,
+  FLAG_FIRE = 1<<22
+}
 
-local function hasbit(x, p)
-  return x % (p + p) >= p
-end
-
-local function setbit(x, p)
-  return hasbit(x, p) and x or x + p
-end
-
-local function clearbit(x, p)
-  return hasbit(x, p) and x - p or x
+local function resetPossessedItems()
+  possessItem.RIPTO = false
+  possessItem.SOUCI = false
+  possessItem.YOPOX = false
 end
 
 -- When passive effects should update
 function Skwirel:onUpdate(player)
   if game:GetFrameCount() == 1 then
+    resetPossessedItems()
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.SOUCI, Vector(150, 280), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.RIPTO, Vector(230, 280), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.SKAMA, Vector(310, 280), Vector(0, 0), nil)
@@ -65,17 +80,36 @@ function Skwirel:onUpdate(player)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.ARTHR, Vector(310, 350), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.PCRGE, Vector(230, 350), Vector(0, 0), nil)
   end
+
+  if player:HasCollectible(itemID.YOPOX) and not possessItem.YOPOX then
+    possessItem.YOPOX = true
+    player:AddCollectible(itemID.TECHNOLOGY, 0, true)
+  end
+
+  if player:HasCollectible(itemID.SOUCI) and not possessItem.SOUCI then
+    possessItem.SOUCI = true
+  end
+
+  if player:HasCollectible(itemID.RIPTO) and not possessItem.RIPTO then
+    possessItem.RIPTO = true
+  end
+
 end
 
 -- When cache is updated
 function Skwirel:onCache(player, cacheFlag)
-
   if cacheFlag == CacheFlag.CACHE_DAMAGE then
     if player:HasCollectible(itemID.RIPTO) then
       player.Damage = player.Damage + effects.RIPTO_DMG
     end
-    if player:HasCollectible(itemID.SOUCI) then
+    if player:HasCollectible(itemID.PCRGE) then
+      player.Damage = player.Damage + effects.PCRGE_DMG
+    end
+    if player:HasCollectible(itemID.SOUCI) and not possessItem.SOUCI then
       player.MaxFireDelay = player.MaxFireDelay - effects.SOUCI_TEARS
+    end
+    if player:HasCollectible(itemID.RIPTO) and not possessItem.RIPTO then
+      player.MaxFireDelay = player.MaxFireDelay - effects.RIPTO_TEARS
     end
   end
 
@@ -87,22 +121,36 @@ function Skwirel:onCache(player, cacheFlag)
   end
 
   if cacheFlag == CacheFlag.CACHE_SHOTSPEED then
+    if player:HasCollectible(itemID.SKAMA) then
+      player.ShotSpeed = player.ShotSpeed + effects.SKAMA_SSPEED
+    end
     if player:HasCollectible(itemID.SOUCI) then
       player.ShotSpeed = player.ShotSpeed + effects.SOUCI_SSPEED
     end
+  end
+
+  if cacheFlag == CacheFlag.CACHE_LUCK then
+    if player:HasCollectible(itemID.YOPOX) then
+      player.Luck = player.Luck + effects.YOPOX_LUCK
+    end
+  end
+
+  if cacheFlag == CacheFlag.CACHE_FLYING then
     if player:HasCollectible(itemID.SKAMA) then
-      player.ShotSpeed = player.ShotSpeed + effects.SKAMA_SSPEED
+      player.CanFly = true
     end
   end
 
   if cacheFlag == CacheFlag.CACHE_TEARFLAG then
     if player:HasCollectible(itemID.RIPTO) then
       player:SetColor(Color(0.85, 0.34, 0.0, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
-      player.TearFlags = setbit(player.TearFlags, bit(2))
+      player.TearFlags = player.TearFlags | TearFlags.FLAG_PIERCING
+    end
+    if player:HasCollectible(itemID.PCRGE) then
+      player.TearFlags = player.TearFlags | TearFlags.FLAG_FIRE
     end
   end
 end
-
 
 function Skwirel:ActivateQuiplash(_Type, RNG)
   local player = Isaac.GetPlayer(0)
@@ -114,10 +162,10 @@ function Skwirel:ActivateQuiplash(_Type, RNG)
     local p3 = math.random(1, quiplash_possible_nb)
     local p4 = math.random(1, quiplash_possible_nb)
     -- On spawne les pickups
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p1], 0, player.Position, Vector(4, 0), nil)
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p2], 0, player.Position, Vector(-4, 0), nil)
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p3], 0, player.Position, Vector(0, 4), nil)
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p4], 0, player.Position, Vector(0, -4), nil)
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p1], 0, player.Position, Vector(6, 0), nil)
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p2], 0, player.Position, Vector(-6, 0), nil)
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p3], 0, player.Position, Vector(0, 6), nil)
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p4], 0, player.Position, Vector(0, -6), nil)
   else
     player:AnimateSad()
   end

@@ -54,10 +54,10 @@ YoPox    | ?
 
 ### Passive
 
-#### BYDL0 (treasure)
+#### BYDL0 (treasure) [ok]
 
-    + 1 TEARS
-    Charm tears
+    + 0.2 SPEED [ok]
+    Charm tears [ok]
 
 #### SOU6 (treasure) [ok]
 

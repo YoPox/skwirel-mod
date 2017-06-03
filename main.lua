@@ -22,6 +22,11 @@ local possessItem = {
   PCRGE = false
 }
 
+local colorApplied = {
+  YOPOX = false,
+  SKAMA = false
+}
+
 local effects = {
   RIPTO_DMG = 0.5,
   RIPTO_TEARS = 1,
@@ -43,7 +48,6 @@ local effects = {
   PCRGE_TEARS = 0.2
 }
 
-local quiplash_possible_nb = 9
 local quiplash_possible_spawn = {
   PickupVariant.PICKUP_HEART,
   PickupVariant.PICKUP_COIN,
@@ -94,6 +98,7 @@ function Skwirel:onUpdate(player)
   end
 
   if player:HasCollectible(itemID.RIPTO) and not possessItem.RIPTO then
+    player:SetColor(Color(0.85, 0.34, 0.0, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
     possessItem.RIPTO = true
   end
 
@@ -149,7 +154,6 @@ function Skwirel:onCache(player, cacheFlag)
 
   if cacheFlag == CacheFlag.CACHE_TEARFLAG then
     if player:HasCollectible(itemID.RIPTO) then
-      player:SetColor(Color(0.85, 0.34, 0.0, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
       player.TearFlags = player.TearFlags | TearFlags.FLAG_PIERCING
     end
     if player:HasCollectible(itemID.BYDLO) then
@@ -158,6 +162,14 @@ function Skwirel:onCache(player, cacheFlag)
     if player:HasCollectible(itemID.PCRGE) then
       player.TearFlags = player.TearFlags | TearFlags.FLAG_FIRE
     end
+
+  if cacheFlag == CacheFlag.CACHE_TEARCOLOR then
+    if player:HasCollectible(itemID.YOPOX) and not colorApplied.YOPOX then
+      player.TearColor = Color(0, 0, 0, 1, 33, 150, 243)
+      colorApplied.YOPOX = true
+    end
+  end
+
   end
 end
 
@@ -166,10 +178,10 @@ function Skwirel:ActivateQuiplash(_Type, RNG)
   if math.random() >= 0.5 then
     player:AnimateHappy()
     -- On choisit 4 pickups au hasard parmi quiplash_possible_spawn
-    local p1 = math.random(1, quiplash_possible_nb)
-    local p2 = math.random(1, quiplash_possible_nb)
-    local p3 = math.random(1, quiplash_possible_nb)
-    local p4 = math.random(1, quiplash_possible_nb)
+    local p1 = math.random(1, #quiplash_possible_spawn)
+    local p2 = math.random(1, #quiplash_possible_spawn)
+    local p3 = math.random(1, #quiplash_possible_spawn)
+    local p4 = math.random(1, #quiplash_possible_spawn)
     -- On spawne les pickups
     Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p1], 0, player.Position, Vector(6, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p2], 0, player.Position, Vector(-6, 0), nil)

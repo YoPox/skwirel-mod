@@ -3,7 +3,7 @@ local game = Game()
 
 local itemID = {
   BYDLO = Isaac.GetItemIdByName("Mini Bydl0"),
-  RIPTO = Isaac.GetItemIdByName("Mini Riptogamer"),
+  RIPTO = Isaac.GetItemIdByName("Mini Riptaud"),
   SKAMA = Isaac.GetItemIdByName("Mini Skama"),
   SOUCI = Isaac.GetItemIdByName("Mini Soucisse"),
   YOPOX = Isaac.GetItemIdByName("Mini YoPox"),
@@ -19,6 +19,7 @@ local possessItem = {
   RIPTO = false,
   SOUCI = false,
   YOPOX = false,
+  BYDLO = false,
   PCRGE = false
 }
 
@@ -28,11 +29,13 @@ local colorApplied = {
 }
 
 local effects = {
-  RIPTO_DMG = 0.5,
-  RIPTO_TEARS = 1,
+  BYDLO_SPEED = 0.2,
+  BYDLO_CHARM_PROBA = 0.05,
 
-  SKAMA_DMG = 1,
+  RIPTO_DMG = 0.25,
+
   SKAMA_SSPEED = 0.15,
+  SKAMA_ROOM_BONUS = 0.04,
 
   SOUCI_SPEED = 0.3,
   SOUCI_SSPEED = 0.25,
@@ -40,25 +43,14 @@ local effects = {
 
   YOPOX_LUCK = 1.5,
 
-  BYDLO_SPEED = 0.2,
-
   POCEB_TEARS = 0.4,
 
   PCRGE_DMG = 0.2,
   PCRGE_TEARS = 0.2
 }
 
-local quiplash_possible_spawn = {
-  PickupVariant.PICKUP_HEART,
-  PickupVariant.PICKUP_COIN,
-  PickupVariant.PICKUP_BOMB,
-  PickupVariant.PICKUP_KEY,
-  PickupVariant.PICKUP_CHEST,
-  PickupVariant.PICKUP_LOCKEDCHEST,
-  PickupVariant.PICKUP_GRAB_BAG,
-  PickupVariant.PICKUP_TAROTCARD,
-  PickupVariant.PICKUP_TRINKET
-}
+local lastCount = 0
+local roomCount = 0
 
 TearFlags = {
   FLAG_PIERCING = 1<<1,
@@ -67,16 +59,18 @@ TearFlags = {
   FLAG_FIRE = 1<<22
 }
 
-local function resetPossessedItems()
+local function reset()
   possessItem.RIPTO = false
   possessItem.SOUCI = false
   possessItem.YOPOX = false
+  roomCount = 0
+  lastCount = 0
 end
 
 -- When passive effects should update
 function Skwirel:onUpdate(player)
-  if game:GetFrameCount() == 1 then
-    resetPossessedItems()
+  if game:GetFrameCount() == 0 then
+    reset()
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.SOUCI, Vector(150, 280), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.RIPTO, Vector(230, 280), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.SKAMA, Vector(310, 280), Vector(0, 0), nil)
@@ -94,11 +88,18 @@ function Skwirel:onUpdate(player)
   end
 
   if player:HasCollectible(itemID.SOUCI) and not possessItem.SOUCI then
+    player:SetColor(Color(0.03, 0.83, 0.03, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
     possessItem.SOUCI = true
+  end
+
+  if player:HasCollectible(itemID.BYDLO) and not possessItem.BYDLO then
+    player:SetColor(Color(1, 1, 1, 1.0, 50, 50, 50), 0, 0, false, false)
+    possessItem.BYDLO = true
   end
 
   if player:HasCollectible(itemID.RIPTO) and not possessItem.RIPTO then
     player:SetColor(Color(0.85, 0.34, 0.0, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
+    player.TearColor = Color(1, 1, 0.1, 1, 0, 0, 0)
     possessItem.RIPTO = true
   end
 
@@ -113,17 +114,19 @@ function Skwirel:onCache(player, cacheFlag)
     if player:HasCollectible(itemID.PCRGE) then
       player.Damage = player.Damage + effects.PCRGE_DMG
     end
+    if player:HasCollectible(itemID.SKAMA) and not possessItem.SKAMA then
+      if lastCount < roomCount then
+        player.Damage = player.Damage + effects.SKAMA_ROOM_BONUS
+        lastCount = roomCount
+      end
+    end
     if player:HasCollectible(itemID.SOUCI) and not possessItem.SOUCI then
       player.MaxFireDelay = player.MaxFireDelay - effects.SOUCI_TEARS
-    end
-    if player:HasCollectible(itemID.RIPTO) and not possessItem.RIPTO then
-      player.MaxFireDelay = player.MaxFireDelay - effects.RIPTO_TEARS
     end
   end
 
   if cacheFlag == CacheFlag.CACHE_SPEED then
     if player:HasCollectible(itemID.SOUCI) then
-      player:SetColor(Color(0.03, 0.83, 0.03, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
       player.MoveSpeed = player.MoveSpeed + effects.SOUCI_SPEED
     end
     if player:HasCollectible(itemID.BYDLO) then
@@ -146,49 +149,109 @@ function Skwirel:onCache(player, cacheFlag)
     end
   end
 
-  if cacheFlag == CacheFlag.CACHE_FLYING then
-    if player:HasCollectible(itemID.SKAMA) then
-      player.CanFly = true
-    end
-  end
-
   if cacheFlag == CacheFlag.CACHE_TEARFLAG then
     if player:HasCollectible(itemID.RIPTO) then
       player.TearFlags = player.TearFlags | TearFlags.FLAG_PIERCING
     end
-    if player:HasCollectible(itemID.BYDLO) then
-      player.TearFlags = player.TearFlags | TearFlags.FLAG_CHARMING
-    end
     if player:HasCollectible(itemID.PCRGE) then
       player.TearFlags = player.TearFlags | TearFlags.FLAG_FIRE
     end
+  end
 
-  if cacheFlag == CacheFlag.CACHE_TEARCOLOR then
-    if player:HasCollectible(itemID.YOPOX) and not colorApplied.YOPOX then
-      player.TearColor = Color(0, 0, 0, 1, 33, 150, 243)
-      colorApplied.YOPOX = true
+  if cacheFlag == CacheFlag.CACHE_TEARVARIANT then
+    if player:HasCollectible(itemID.RIPTO) then
+      player.TearVariant = player.TearVariant | (1 << 2)
     end
   end
 
+end
+
+function Skwirel:SkamaCache(player, cacheFlag)
+  if cacheFlag == CacheFlag.CACHE_DAMAGE then
+    if player:HasCollectible(itemID.SKAMA) and not possessItem.SKAMA then
+      if lastCount < roomCount then
+        player.Damage = player.Damage + effects.SKAMA_ROOM_BONUS
+        lastCount = roomCount
+      end
+    end
   end
+end
+
+local function RandomCollectible()
+  if math.random() <= 0.95 then
+    -- Pickup
+    local nb = math.random()
+    if nb <= 0.4 then
+      return PickupVariant.PICKUP_COIN
+    elseif nb <= 0.6 then
+      return PickupVariant.PICKUP_BOMB
+    elseif nb <= 0.8 then
+      return PickupVariant.PICKUP_KEY
+    elseif nb <= 0.95 then
+      return PickupVariant.PICKUP_HEART
+    else
+      return PickupVariant.PICKUP_GRAB_BAG
+    end
+    
+  else
+    local nb = math.random()
+    if nb <= 0.05 then
+      -- Collectible
+      return PickupVariant.PICKUP_COLLECTIBLE
+    elseif nb <= 0.25 then
+      -- Golden chest
+      return PickupVariant.PICKUP_LOCKEDCHEST
+    else
+      return PickupVariant.PICKUP_CHEST
+    end
+  end
+
 end
 
 function Skwirel:ActivateQuiplash(_Type, RNG)
   local player = Isaac.GetPlayer(0)
-  if math.random() >= 0.5 then
+  local happy = false
+  while math.random() > 0.3 do
+    local angle = math.random() * 3.14159
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, RandomCollectible(), 0, player.Position, Vector(math.cos(angle) * 6, math.sin(angle) * 6), nil)
+    happy = true
+  end
+  if happy then
     player:AnimateHappy()
-    -- On choisit 4 pickups au hasard parmi quiplash_possible_spawn
-    local p1 = math.random(1, #quiplash_possible_spawn)
-    local p2 = math.random(1, #quiplash_possible_spawn)
-    local p3 = math.random(1, #quiplash_possible_spawn)
-    local p4 = math.random(1, #quiplash_possible_spawn)
-    -- On spawne les pickups
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p1], 0, player.Position, Vector(6, 0), nil)
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p2], 0, player.Position, Vector(-6, 0), nil)
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p3], 0, player.Position, Vector(0, 6), nil)
-    Isaac.Spawn(EntityType.ENTITY_PICKUP, quiplash_possible_spawn[p4], 0, player.Position, Vector(0, -6), nil)
   else
     player:AnimateSad()
+  end
+end
+
+function Skwirel:onFire(tear)
+  local player = Isaac.GetPlayer(0)
+
+  if player:HasCollectible(itemID.RIPTO) then
+    tear:ChangeVariant(11)
+  end
+
+  if player:HasCollectible(itemID.BYDLO) then
+    if math.random() < effects.BYDLO_CHARM_PROBA then
+      tear:SetColor(Color(1, 0.2, 0.8, 1, 25, 25, 25), 10000, 0, true, false)
+      tear.TearFlags = tear.TearFlags | TearFlags.FLAG_CHARMING
+    end
+  end
+
+  if player:HasCollectible(itemID.SKAMA) then
+    if math.random() < 0.5 then
+      tear:SetColor(Color(1, 0.2, 0.2, 1, 0, 0, 0), 10000, 0, true, false)
+    else
+      tear:SetColor(Color(0.8, 0.8, 0.2, 1, 0, 0, 0), 10000, 0, true, false)
+    end
+  end
+
+end
+
+function Skwirel:onRoom()
+  local player = Game():GetPlayer(0)
+  if Game():GetRoom():IsFirstVisit() and player:HasCollectible(itemID.SKAMA) then
+    roomCount = roomCount + 1
+    Skwirel:SkamaCache(player, CacheFlag.CACHE_DAMAGE)
   end
 end
 
@@ -200,3 +263,6 @@ Skwirel:AddCallback(ModCallbacks.MC_USE_ITEM, Skwirel.ActivateQuiplash, itemID.Q
 -- flags
 Skwirel:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Skwirel.onUpdate)
 Skwirel:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Skwirel.onCache)
+Skwirel:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Skwirel.SkamaCache)
+Skwirel:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, Skwirel.onFire)
+Skwirel:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Skwirel.onRoom)

@@ -4,10 +4,10 @@ Binding of Isaac : Afterbirth+ mod
 
 Item                                                            | Name     | Type      | Effect
 --------------------------------------------------------------- | -------- | --------- | -----------
-![Bydl0](https://github.com/yopox/skwirel-mod/tree/master/resources/gfx/Items/collectibles/item_bydl0.png) | Mini Bydl0 | Item room | +0.2 speed <br> white skin <br> 5% charm tears
-![Skama](https://github.com/yopox/skwirel-mod/tree/master/resources/gfx/Items/collectibles/item_skama.png) | Mini Skama | Item room | +0.15 shot speed <br> +0.04 damage per room explored <br> red and yellow tears
-![Riptaud](https://github.com/yopox/skwirel-mod/tree/master/resources/gfx/Items/collectibles/item_ripto.png) | Mini Riptaud | Item room | orange skin <br> yellow piercing tears <br> +0.25 damage
-![Quiplash](https://github.com/yopox/skwirel-mod/tree/master/resources/gfx/Items/collectibles/item_quiplash.png) | Quiplash | Item room | 70% proba to spawn a pickup until it fails. <br> Probabilities are : <br> - coin (38%) <br> - bomb (19%) <br> - key (19%) <br> - heart (14,25%) <br> - bag (4,75%) <br> - chest (3,75%) <br> - locked chest (1%) <br> - collectible (0,25%)
+![Bydl0](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_bydl0.png) | Mini Bydl0 | Item room | +0.2 speed <br> white skin <br> 5% charm tears
+![Skama](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_skama.png) | Mini Skama | Item room | +0.15 shot speed <br> +0.04 damage per room explored <br> red and yellow tears
+![Riptaud](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_ripto.png) | Mini Riptaud | Item room | orange skin <br> yellow piercing tears <br> +0.25 damage
+![Quiplash](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_quiplash.png) | Quiplash | Item room | 70% proba to spawn a pickup until it fails. <br> Probabilities are : <br> - coin (38%) <br> - bomb (19%) <br> - key (19%) <br> - heart (14,25%) <br> - bag (4,75%) <br> - chest (3,75%) <br> - locked chest (1%) <br> - collectible (0,25%)
 
 ## Trinkets
 

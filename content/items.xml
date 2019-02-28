@@ -1,18 +1,18 @@
 <items gfxroot="gfx/items/" version="1">
 
-	<passive cache="damage tearflag" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Mini Riptaud"/>
+	<passive cache="damage" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Mini Riptaud"/>
 
 	<passive cache="damage" description="Let's explore!" gfx="item_skama.png" name="Mini Skama"/>
 
-	<passive cache="speed shotspeed damage" description="<:%ç>>a$e up!" gfx="item_soucisse.png" name="Mini Soucisse"/>
+	<passive cache="speed shotspeed" description="<:%ç>>a$e up!" gfx="item_soucisse.png" name="Mini Soucisse"/>
 
 	<passive cache="luck tearflag" description="Geek up!" gfx="item_yopox.png" name="Mini YoPox"/>
 
-	<passive cache="speed damage tearflag" description="Go and meet the girls!" gfx="item_bydl0.png" name="Mini Bydl0"/>
+	<passive cache="speed damage" description="Go and meet the girls!" gfx="item_bydl0.png" name="Mini Bydl0"/>
 
 	<passive cache="" description="And now, the game!" gfx="item_arthurr.png" name="Arthurr"/>
 
-	<passive cache="" description="Plz poce bleu!" gfx="item_poceBleu.png" name="Poce Bleu"/>
+	<passive cache="firedelay" description="Plz poce bleu!" gfx="item_poceBleu.png" name="Poce Bleu"/>
 
 	<passive cache="damage" description="Unsubscribed." gfx="item_pouceRouge.png" name="Pouce Rouge"/>
 

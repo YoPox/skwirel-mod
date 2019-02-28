@@ -21,7 +21,8 @@ local possessItem = {
   YOPOX = false,
   BYDLO = false,
   SKAMA = false,
-  PCRGE = false
+  PCRGE = false,
+  POCEB = false
 }
 
 local effects = {
@@ -40,7 +41,7 @@ local effects = {
 
   YOPOX_LUCK = 1.5,
 
-  POCEB_TEARS = 0.4,
+  POCEB_TEARS = 1,
 
   PCRGE_TEARS = 0.2
 }
@@ -63,6 +64,7 @@ local function reset()
   lastCount = 0
   stats:RemoveCache("BASE DMG")
   stats:RemoveCache("FLAT DMG")
+  stats:RemoveCache("BASE TEARS")
   stats:RemoveCache("BASE SPD")
   stats:RemoveCache("BASE SSPD")
   stats:RemoveCache("BASE LUCK")
@@ -82,6 +84,7 @@ function Skwirel:onUpdate(player)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.PCRGE, Vector(230, 350), Vector(0, 0), nil)
     stats:AddCache(Skwirel.CacheBaseDmg, CacheFlag.CACHE_DAMAGE, StatStage.BASE, "BASE DMG")
     stats:AddCache(Skwirel.CacheFlatDmg, CacheFlag.CACHE_DAMAGE, StatStage.FLAT, "FLAT DMG")
+    stats:AddCache(Skwirel.CacheBaseTears, CacheFlag.CACHE_FIREDELAY, StatStage.BASE, "BASE TEARS")
     stats:AddCache(Skwirel.CacheBaseSpd, CacheFlag.CACHE_SPEED, StatStage.BASE, "BASE SPD")
     stats:AddCache(Skwirel.CacheBaseSSpd, CacheFlag.CACHE_SHOTSPEED, StatStage.BASE, "BASE SSPD")
     stats:AddCache(Skwirel.CacheBaseLuck, CacheFlag.CACHE_LUCK, StatStage.BASE, "BASE LUCK")
@@ -114,9 +117,15 @@ function Skwirel:onUpdate(player)
     player.TearColor = Color(1, 0.1, 0.1, 1, 0, 0, 0)
     possessItem.PCRGE = true
   end
-
+  
   if player:HasCollectible(itemID.SKAMA) and not possessItem.SKAMA then
     possessItem.SKAMA = true
+  end
+
+  if player:HasCollectible(itemID.POCEB) and not possessItem.POCEB then
+    player:AddSoulHearts(6)
+    player.TearColor = Color(0.6, 0.6, 1, 1, 0, 0, 0)
+    possessItem.POCEB = true
   end
 
 end
@@ -133,6 +142,12 @@ end
 function Skwirel:CacheFlatDmg(player)
   if player:HasCollectible(itemID.SKAMA) then
   player.Damage = player.Damage + effects.SKAMA_ROOM_BONUS * roomCount
+  end
+end
+
+function Skwirel:CacheBaseTears(player)
+  if player:HasCollectible(itemID.POCEB) then
+    player.MaxFireDelay = player.MaxFireDelay + 0.7*1000
   end
 end
 

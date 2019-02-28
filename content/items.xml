@@ -2,7 +2,7 @@
 
 	<passive cache="damage tearflag" description="Tu joues, tu meurs et on regarde!" gfx="item_ripto.png" name="Mini Riptaud"/>
 
-	<passive cache="shotspeed damage" description="Let's explore!" gfx="item_skama.png" name="Mini Skama"/>
+	<passive cache="damage" description="Let's explore!" gfx="item_skama.png" name="Mini Skama"/>
 
 	<passive cache="speed shotspeed damage" description="<:%ç>>a$e up!" gfx="item_soucisse.png" name="Mini Soucisse"/>
 
@@ -14,7 +14,7 @@
 
 	<passive cache="" description="Plz poce bleu!" gfx="item_poceBleu.png" name="Poce Bleu"/>
 
-	<passive cache="damage" description="C NUL!" gfx="item_pouceRouge.png" name="Pouce Rouge"/>
+	<passive cache="damage" description="Unsubscribed." gfx="item_pouceRouge.png" name="Pouce Rouge"/>
 
 	<active description="Be funny!" gfx="item_quiplash.png" name="Quiplash" maxcharges="6"/>
 </items>

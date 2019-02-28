@@ -8,10 +8,11 @@
         <Item Name="Mini Bydl0" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
         <Item Name="Poce Bleu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
         <Item Name="Pouce Rouge" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-        <Item Name="Quiplash" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
     </Pool>
 
-    <Pool Name="shop"></Pool>
+    <Pool Name="shop">
+        <Item Name="Quiplash" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+    </Pool>
 
     <Pool Name="boss">
         <Item Name="Arthurr" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>

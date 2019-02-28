@@ -1,14 +1,35 @@
 # skwirel-mod
 
+## About
+
 Binding of Isaac : Afterbirth+ mod
 
-Item                                                            | Name     | Type      | Effect
---------------------------------------------------------------- | -------- | --------- | -----------
-![Bydl0](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_bydl0.png) | Mini Bydl0 | Item room | +0.2 speed <br> white skin <br> 5% charm tears
-![Skama](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_skama.png) | Mini Skama | Item room | +0.15 shot speed <br> +0.04 damage per room explored <br> red and yellow tears
-![Riptaud](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_ripto.png) | Mini Riptaud | Item room | orange skin <br> yellow piercing tears <br> +0.25 damage
-![Quiplash](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_quiplash.png) | Quiplash | Item room | 70% proba to spawn a pickup until it fails. <br> Probabilities are : <br> - coin (38%) <br> - bomb (19%) <br> - key (19%) <br> - heart (14,25%) <br> - bag (4,75%) <br> - chest (3,75%) <br> - locked chest (1%) <br> - collectible (0,25%)
+You need [StatAPI2.0](https://steamcommunity.com/sharedfiles/filedetails/?id=1431542487) to play with this mod !
 
+## Content
+
+Stat bonuses are applied in this order :
+
+- BASE : additive bonus
+- MULTI1 : character dependant multiplier (ie. Cain has more damage multiplier than Isaac) or intermediate multiplier (ie. Polyphemus)
+- FLAT : additive bonus
+- MULTI2 : last stage multipliers (ie. Magic Mushroom)
+
+If you pick up "Pouce Rouge" with Isaac, you will gain 1.01 damage, with Cain 1.21 damage (**base** damage)
+
+However, if you pick up "Mini Skama" with Cain or Isaac, you will gain 0.04 damage each time you explore a new room (**flat** damage).
+
+Item                                                            | Name     | Pool | Type      | Effect
+--------------------------------------------------------------- | -------- | --- | ------ | -----------
+![Bydl0](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_bydl0.png) | Mini Bydl0 | Item room | Passive | +0.2 base speed <br> 5% charm tears <br> white skin
+![Skama](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_skama.png) | Mini Skama | Item room | Passive |  +0.04 flat damage per room explored <br> red and yellow tears
+![Riptaud](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_ripto.png) | Mini Riptaud | Item room | Passive | +0.25 base damage <br> yellow piercing tears <br> orange skin
+![Soucisse](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_soucisse.png) | Mini Soucisse | Item room | Passive | +0.25 base speed <br> +0.25 base shot speed <br> 1% corrupted tears (black tears with a random effect)
+![Pouce Rouge](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_pouceRouge.png) | Pouce Rouge | Beggar | Passive | -1 HP <br> +0.55 base damage <br> red tears
+![Quiplash](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_quiplash.png) | Quiplash | Shop | Active (6) | 70% probability to spawn a pickup until it fails. <br> Pickups can be : <br> - coin (38%) <br> - bomb (19%) <br> - key (19%) <br> - heart (14,25%) <br> - bag (4,75%) <br> - chest (3,75%) <br> - locked chest (1%) <br> - collectible (0,25%)
+
+
+<!-- 
 ## Trinkets
 
 ### GTX Titan
@@ -158,4 +179,4 @@ Lance des piercing tears (logo youtube)
 ```
 Apparait avec une chance de 1/2 à chaque salle
 Lance des tears avec l'effet 20/20 (double tears)
-```
+``` -->

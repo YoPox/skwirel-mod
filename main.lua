@@ -20,12 +20,8 @@ local possessItem = {
   SOUCI = false,
   YOPOX = false,
   BYDLO = false,
+  SKAMA = false,
   PCRGE = false
-}
-
-local colorApplied = {
-  YOPOX = false,
-  SKAMA = false
 }
 
 local effects = {
@@ -36,16 +32,16 @@ local effects = {
 
   SKAMA_SSPEED = 0.15,
   SKAMA_ROOM_BONUS = 0.04,
+  
+  PCRGE_DMG = 0.55,
 
-  SOUCI_SPEED = 0.3,
+  SOUCI_SPEED = 0.25,
   SOUCI_SSPEED = 0.25,
-  SOUCI_TEARS = 1,
 
   YOPOX_LUCK = 1.5,
 
   POCEB_TEARS = 0.4,
 
-  PCRGE_DMG = 0.2,
   PCRGE_TEARS = 0.2
 }
 
@@ -60,14 +56,18 @@ TearFlags = {
 }
 
 local function reset()
-  possessItem.RIPTO = false
-  possessItem.SOUCI = false
-  possessItem.YOPOX = false
+  for k,v in pairs(possessItem) do
+    possessItem[k] = false
+  end
   roomCount = 0
   lastCount = 0
+  stats:RemoveCache("BASE DMG")
+  stats:RemoveCache("FLAT DMG")
+  stats:RemoveCache("BASE SPD")
+  stats:RemoveCache("BASE SSPD")
+  stats:RemoveCache("BASE LUCK")
 end
 
--- When passive effects should update
 function Skwirel:onUpdate(player)
   if game:GetFrameCount() == 0 then
     reset()
@@ -80,6 +80,11 @@ function Skwirel:onUpdate(player)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.QPLSH, Vector(390, 350), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.ARTHR, Vector(310, 350), Vector(0, 0), nil)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.PCRGE, Vector(230, 350), Vector(0, 0), nil)
+    stats:AddCache(Skwirel.CacheBaseDmg, CacheFlag.CACHE_DAMAGE, StatStage.BASE, "BASE DMG")
+    stats:AddCache(Skwirel.CacheFlatDmg, CacheFlag.CACHE_DAMAGE, StatStage.FLAT, "FLAT DMG")
+    stats:AddCache(Skwirel.CacheBaseSpd, CacheFlag.CACHE_SPEED, StatStage.BASE, "BASE SPD")
+    stats:AddCache(Skwirel.CacheBaseSSpd, CacheFlag.CACHE_SHOTSPEED, StatStage.BASE, "BASE SSPD")
+    stats:AddCache(Skwirel.CacheBaseLuck, CacheFlag.CACHE_LUCK, StatStage.BASE, "BASE LUCK")
   end
 
   if player:HasCollectible(itemID.YOPOX) and not possessItem.YOPOX then
@@ -100,80 +105,55 @@ function Skwirel:onUpdate(player)
   if player:HasCollectible(itemID.RIPTO) and not possessItem.RIPTO then
     player:SetColor(Color(0.85, 0.34, 0.0, 1.0, 0.0, 0.0, 0.0), 0, 0, false, false)
     player.TearColor = Color(1, 1, 0.1, 1, 0, 0, 0)
+    player.TearFlags = player.TearFlags | TearFlags.FLAG_PIERCING
     possessItem.RIPTO = true
   end
 
-end
-
--- When cache is updated
-function Skwirel:onCache(player, cacheFlag)
-  if cacheFlag == CacheFlag.CACHE_DAMAGE then
-    if player:HasCollectible(itemID.RIPTO) then
-      player.Damage = player.Damage + effects.RIPTO_DMG
-    end
-    if player:HasCollectible(itemID.PCRGE) then
-      player.Damage = player.Damage + effects.PCRGE_DMG
-    end
-    if player:HasCollectible(itemID.SKAMA) and not possessItem.SKAMA then
-      if lastCount < roomCount then
-        player.Damage = player.Damage + effects.SKAMA_ROOM_BONUS
-        lastCount = roomCount
-      end
-    end
-    if player:HasCollectible(itemID.SOUCI) and not possessItem.SOUCI then
-      player.MaxFireDelay = player.MaxFireDelay - effects.SOUCI_TEARS
-    end
+  if player:HasCollectible(itemID.PCRGE) and not possessItem.PCRGE then
+    player:AddMaxHearts(-2, false)
+    player.TearColor = Color(1, 0.1, 0.1, 1, 0, 0, 0)
+    possessItem.PCRGE = true
   end
 
-  if cacheFlag == CacheFlag.CACHE_SPEED then
-    if player:HasCollectible(itemID.SOUCI) then
-      player.MoveSpeed = player.MoveSpeed + effects.SOUCI_SPEED
-    end
-    if player:HasCollectible(itemID.BYDLO) then
-      player.MoveSpeed = player.MoveSpeed + effects.BYDLO_SPEED
-    end
-  end
-
-  if cacheFlag == CacheFlag.CACHE_SHOTSPEED then
-    if player:HasCollectible(itemID.SKAMA) then
-      player.ShotSpeed = player.ShotSpeed + effects.SKAMA_SSPEED
-    end
-    if player:HasCollectible(itemID.SOUCI) then
-      player.ShotSpeed = player.ShotSpeed + effects.SOUCI_SSPEED
-    end
-  end
-
-  if cacheFlag == CacheFlag.CACHE_LUCK then
-    if player:HasCollectible(itemID.YOPOX) then
-      player.Luck = player.Luck + effects.YOPOX_LUCK
-    end
-  end
-
-  if cacheFlag == CacheFlag.CACHE_TEARFLAG then
-    if player:HasCollectible(itemID.RIPTO) then
-      player.TearFlags = player.TearFlags | TearFlags.FLAG_PIERCING
-    end
-    if player:HasCollectible(itemID.PCRGE) then
-      player.TearFlags = player.TearFlags | TearFlags.FLAG_FIRE
-    end
-  end
-
-  if cacheFlag == CacheFlag.CACHE_TEARVARIANT then
-    if player:HasCollectible(itemID.RIPTO) then
-      player.TearVariant = player.TearVariant | (1 << 2)
-    end
+  if player:HasCollectible(itemID.SKAMA) and not possessItem.SKAMA then
+    possessItem.SKAMA = true
   end
 
 end
 
-function Skwirel:SkamaCache(player, cacheFlag)
-  if cacheFlag == CacheFlag.CACHE_DAMAGE then
-    if player:HasCollectible(itemID.SKAMA) and not possessItem.SKAMA then
-      if lastCount < roomCount then
-        player.Damage = player.Damage + effects.SKAMA_ROOM_BONUS
-        lastCount = roomCount
-      end
-    end
+function Skwirel:CacheBaseDmg(player)
+  if player:HasCollectible(itemID.RIPTO) then
+    player.Damage = player.Damage + effects.RIPTO_DMG
+  end
+  if player:HasCollectible(itemID.PCRGE) then
+    player.Damage = player.Damage + effects.PCRGE_DMG
+  end
+end
+
+function Skwirel:CacheFlatDmg(player)
+  if player:HasCollectible(itemID.SKAMA) then
+  player.Damage = player.Damage + effects.SKAMA_ROOM_BONUS * roomCount
+  end
+end
+
+function Skwirel:CacheBaseSpd(player, cacheFlag)
+  if player:HasCollectible(itemID.SOUCI) then
+    player.MoveSpeed = player.MoveSpeed + effects.SOUCI_SPEED
+  end
+  if player:HasCollectible(itemID.BYDLO) then
+    player.MoveSpeed = player.MoveSpeed + effects.BYDLO_SPEED
+  end
+end
+
+function Skwirel:CacheBaseSSpd(player, cacheFlag)
+  if player:HasCollectible(itemID.SOUCI) then
+    player.ShotSpeed = player.ShotSpeed + effects.SOUCI_SSPEED
+  end
+end
+
+function Skwirel:CacheBaseLuck(player, cacheFlag)
+  if player:HasCollectible(itemID.YOPOX) then
+    player.Luck = player.Luck + effects.YOPOX_LUCK
   end
 end
 
@@ -245,13 +225,19 @@ function Skwirel:onFire(tear)
     end
   end
 
+  if player:HasCollectible(itemID.SOUCI) then
+    if math.random() < 0.01 then
+      tear:SetColor(Color(0, 0, 0, 1, 15, 15, 15), 10000, 0, true, false)
+      tear.TearFlags = tear.TearFlags | (1 << math.floor(math.random() * 55))
+    end
+  end
+
 end
 
 function Skwirel:onRoom()
   local player = Game():GetPlayer(0)
   if Game():GetRoom():IsFirstVisit() and player:HasCollectible(itemID.SKAMA) then
     roomCount = roomCount + 1
-    Skwirel:SkamaCache(player, CacheFlag.CACHE_DAMAGE)
   end
 end
 
@@ -262,7 +248,5 @@ Skwirel:AddCallback(ModCallbacks.MC_USE_ITEM, Skwirel.ActivateQuiplash, itemID.Q
 
 -- flags
 Skwirel:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Skwirel.onUpdate)
-Skwirel:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Skwirel.onCache)
-Skwirel:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Skwirel.SkamaCache)
 Skwirel:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, Skwirel.onFire)
 Skwirel:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Skwirel.onRoom)

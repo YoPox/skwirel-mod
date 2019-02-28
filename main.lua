@@ -15,6 +15,19 @@ local itemID = {
   TECHNOLOGY = Isaac.GetItemIdByName("Technology")
 }
 
+-- External item descriptions
+if not __eidItemDescriptions then         
+  __eidItemDescriptions = {};
+end
+
+__eidItemDescriptions[itemID.BYDLO] = "\1 +0.2 Speed #5% Charm tears #White skin"
+__eidItemDescriptions[itemID.SKAMA] = "\1 +0.04 Damage (flat) per room explored #Red and yellow tears"
+__eidItemDescriptions[itemID.RIPTO] = "\1 +0.25 Damage #Yellow piercing tears #Orange skin"
+__eidItemDescriptions[itemID.SOUCI] = "\1 +0.25 Speed #\1 +0.25 Shot speed  #1% Corrupted tears (black tears with a random effect)"
+__eidItemDescriptions[itemID.POCEB] = "\1 +3 Soul hearts #\1 +1 Tears  #Blue tears"
+__eidItemDescriptions[itemID.PCRGE] = "\2 -1 Health down #\1 +0.55 Damage  #Red tears"
+__eidItemDescriptions[itemID.QPLSH] = "70% Probability to spawn a pickup until it fails. #Pickups can be : #- coin (38%) #- bomb (19%) #- key (19%) #- heart (14,25%) #- bag (4,75%) #- chest (3,75%) #- locked chest (1%) #- collectible (0,25%)"
+
 local possessItem = {
   RIPTO = false,
   SOUCI = false,

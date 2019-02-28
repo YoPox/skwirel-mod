@@ -19,15 +19,17 @@ If you pick up "Pouce Rouge" with Isaac, you will gain 1.01 damage, with Cain 1.
 
 However, if you pick up "Mini Skama" with Cain or Isaac, you will gain 0.04 damage each time you explore a new room (**flat** damage).
 
+By default stats up/down in this mod are **base** bonuses.
+
 Item                                                            | Name     | Pool | Type      | Effect
 --------------------------------------------------------------- | -------- | --- | ------ | -----------
-![Bydl0](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_bydl0.png) | Mini Bydl0 | Item room | Passive | +0.2 base speed <br> 5% charm tears <br> white skin
-![Skama](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_skama.png) | Mini Skama | Item room | Passive |  +0.04 flat damage per room explored <br> red and yellow tears
-![Riptaud](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_ripto.png) | Mini Riptaud | Item room | Passive | +0.25 base damage <br> yellow piercing tears <br> orange skin
-![Soucisse](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_soucisse.png) | Mini Soucisse | Item room | Passive | +0.25 base speed <br> +0.25 base shot speed <br> 1% corrupted tears (black tears with a random effect)
-![Poce Bleu](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_poceBleu.png) | Poce Bleu | Beggar | Passive | +3 soul hearts <br> +1 base tears <br> blue tears
-![Pouce Rouge](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_pouceRouge.png) | Pouce Rouge | Beggar | Passive | -1 HP <br> +0.55 base damage <br> red tears
-![Quiplash](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_quiplash.png) | Quiplash | Shop | Active (6) | 70% probability to spawn a pickup until it fails. <br> Pickups can be : <br> - coin (38%) <br> - bomb (19%) <br> - key (19%) <br> - heart (14,25%) <br> - bag (4,75%) <br> - chest (3,75%) <br> - locked chest (1%) <br> - collectible (0,25%)
+![Bydl0](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_bydl0.png) | Mini Bydl0 | Item room | Passive | +0.2 Speed <br> 5% Charm tears <br> White skin
+![Skama](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_skama.png) | Mini Skama | Item room | Passive |  +0.04 Damage (flat) per room explored <br> Red and yellow tears
+![Riptaud](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_ripto.png) | Mini Riptaud | Item room | Passive | +0.25 Damage <br> Yellow piercing tears <br> Orange skin
+![Soucisse](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_soucisse.png) | Mini Soucisse | Item room | Passive | +0.25 Speed <br> +0.25 Shot speed <br> 1% Corrupted tears (black tears with a random effect)
+![Poce Bleu](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_poceBleu.png) | Poce Bleu | Beggar | Passive | +3 Soul hearts <br> +1 Tears <br> Blue tears
+![Pouce Rouge](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_pouceRouge.png) | Pouce Rouge | Beggar | Passive | -1 Health down <br> +0.55 Damage <br> Red tears
+![Quiplash](https://raw.githubusercontent.com/yopox/skwirel-mod/master/resources/gfx/Items/Collectibles/item_quiplash.png) | Quiplash | Shop | Active (6) | 70% Probability to spawn a pickup until it fails. <br> Pickups can be : <br> - coin (38%) <br> - bomb (19%) <br> - key (19%) <br> - heart (14,25%) <br> - bag (4,75%) <br> - chest (3,75%) <br> - locked chest (1%) <br> - collectible (0,25%)
 
 
 <!-- 

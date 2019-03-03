@@ -6,7 +6,7 @@
 
 	<passive cache="speed shotspeed" description="<:%ç>>a$e up!" gfx="item_soucisse.png" name="Mini Soucisse"/>
 
-	<passive cache="luck tearflag" description="Geek up!" gfx="item_yopox.png" name="Mini YoPox"/>
+	<passive cache="luck" description="Geek up!" gfx="item_yopox.png" name="Mini Yopox"/>
 
 	<passive cache="speed damage" description="Go and meet the girls!" gfx="item_bydl0.png" name="Mini Bydl0"/>
 

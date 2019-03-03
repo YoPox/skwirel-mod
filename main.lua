@@ -6,13 +6,22 @@ local itemID = {
   RIPTO = Isaac.GetItemIdByName("Mini Riptaud"),
   SKAMA = Isaac.GetItemIdByName("Mini Skama"),
   SOUCI = Isaac.GetItemIdByName("Mini Soucisse"),
-  YOPOX = Isaac.GetItemIdByName("Mini YoPox"),
+  YOPOX = Isaac.GetItemIdByName("Mini Yopox"),
   QPLSH = Isaac.GetItemIdByName("Quiplash"),
   ARTHR = Isaac.GetItemIdByName("Arthurr"),
   POCEB = Isaac.GetItemIdByName("Poce Bleu"),
   PCRGE = Isaac.GetItemIdByName("Pouce Rouge"),
   -- non mod items
-  TECHNOLOGY = Isaac.GetItemIdByName("Technology")
+  TECHNOLOGY = Isaac.GetItemIdByName("Technology"),
+  TECHNOLOGY2 = Isaac.GetItemIdByName("Technology 2"),
+  TECHX = Isaac.GetItemIdByName("Tech X"),
+  TECHZERO = Isaac.GetItemIdByName("Technology Zero"),
+  TECH5 = Isaac.GetItemIdByName("Tech.5"),
+  SPIDERMOD = Isaac.GetItemIdByName("Spider Mod"),
+  JACOBSLADDER = Isaac.GetItemIdByName("Jacob's Ladder"),
+  CARBATTERY = Isaac.GetItemIdByName("Car Battery"),
+  EXTENSIONCORD = Isaac.GetTrinketIdByName("Extension Cord"),
+  AAABATTERY = Isaac.GetTrinketIdByName("AAA Battery")
 }
 
 -- External item descriptions
@@ -24,6 +33,7 @@ __eidItemDescriptions[itemID.BYDLO] = "\1 +0.2 Speed #5% Charm tears #White skin
 __eidItemDescriptions[itemID.SKAMA] = "\1 +0.04 Damage (flat) per room explored #Red and yellow tears"
 __eidItemDescriptions[itemID.RIPTO] = "\1 +0.25 Damage #Yellow piercing tears #Orange skin"
 __eidItemDescriptions[itemID.SOUCI] = "\1 +0.25 Speed #\1 +0.25 Shot speed  #1% Corrupted tears (black tears with a random effect)"
+__eidItemDescriptions[itemID.YOPOX] = "10% : Spawn Technology #10% : Spawn Technology II #10% : Spawn Tech X #10% : Spawn Tech .5 #10% : Spawn Technology Zero #10% : Spawn Spider Mod #10% : Spawn Jacob's Ladder #10% : Spawn Car Battery #10% : Spawn Extension Cord + AAA Battery #10% : Spawn 10 Lil' Battery"
 __eidItemDescriptions[itemID.POCEB] = "\1 +3 Soul hearts #\1 +1 Tears  #Blue tears"
 __eidItemDescriptions[itemID.PCRGE] = "\2 -1 Health down #\1 +0.55 Damage  #Red tears"
 __eidItemDescriptions[itemID.QPLSH] = "70% Probability to spawn a pickup until it fails. #Pickups can be : #- coin (38%) #- bomb (19%) #- key (19%) #- heart (14,25%) #- bag (4,75%) #- chest (3,75%) #- locked chest (1%) #- collectible (0,25%)"
@@ -51,8 +61,6 @@ local effects = {
 
   SOUCI_SPEED = 0.25,
   SOUCI_SSPEED = 0.25,
-
-  YOPOX_LUCK = 1.5,
 
   POCEB_TEARS = 1,
 
@@ -105,7 +113,33 @@ function Skwirel:onUpdate(player)
 
   if player:HasCollectible(itemID.YOPOX) and not possessItem.YOPOX then
     possessItem.YOPOX = true
-    player:AddCollectible(itemID.TECHNOLOGY, 0, true)
+    local nb = math.random()
+    if nb < 0.1 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.TECHNOLOGY, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.2 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.TECHNOLOGY2, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.3 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.TECHX, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.4 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.TECH5, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.5 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.TECHZERO, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.6 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.SPIDERMOD, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.7 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.JACOBSLADDER, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.8 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, itemID.CARBATTERY, player.Position + Vector(-50, 0), Vector(0, 0), nil)
+    elseif nb < 0.9 then
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, itemID.EXTENSIONCORD, player.Position, Vector(-4, 0), nil)
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, itemID.AAABATTERY, player.Position, Vector(4, 0), nil)
+    else
+      for i = 0,9,1 do
+        local angle = math.random() * 2 * 3.1415926
+        local speed = Vector(math.cos(angle) * 4, math.sin(angle) * 4)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, 0, player.Position, speed, nil)
+      end
+    end
   end
 
   if player:HasCollectible(itemID.SOUCI) and not possessItem.SOUCI then
@@ -180,9 +214,6 @@ function Skwirel:CacheBaseSSpd(player, cacheFlag)
 end
 
 function Skwirel:CacheBaseLuck(player, cacheFlag)
-  if player:HasCollectible(itemID.YOPOX) then
-    player.Luck = player.Luck + effects.YOPOX_LUCK
-  end
 end
 
 local function RandomCollectible()
